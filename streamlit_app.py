@@ -26,7 +26,7 @@ st.write(data.head(15))
 st.header('Especifique os parâmetros de entrada')
 
 def user_input_features():
-    imc = st.slider('Bmi',float(data.imc.min()), float(data.imc.max()), float(data.imc.mean()))
+    imc = st.slider('Imc',float(data.imc.min()), float(data.imc.max()), float(data.imc.mean()))
     idade = st.slider('Idade', int(data.idade.min()), int(data.idade.max()), int(data.idade.mode()))
     filhos = st.slider('Filhos', int(data.filhos.min()), int(data.filhos.max()), int(data.filhos.mode()))
     genero = st.radio('Gênero', ('feminino', 'masculino'))
