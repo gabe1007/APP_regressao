@@ -19,20 +19,21 @@ data['region'] = data['region'].replace(['southeast', 'southwest', 'northeast', 
 data['smoker'] = data['smoker'].replace(['yes', 'no'], ['sim', 'nao'])
 data.rename(columns={'age':'idade', 'sex':'genero', 'bmi':'imc', 'children':'filhos', 'smoker':'fumante', 'region':'regiao', 'charges':'total'}, inplace=True)
 
-    
 st.write(data.head(15))
 
+# Sidebar
 # Especifique os parametros de entrada
-st.header('Especifique os parâmetros de entrada')
+st.sidebar.write('---')
+st.sidebar.header('Especifique os parâmetros de entrada para Regressão linear')
 
 def user_input_features():
-    imc = st.slider('Bmi',float(data.imc.min()), float(data.imc.max()), float(data.imc.mean()))
-    idade = st.slider('Idade', int(data.idade.min()), int(data.idade.max()), int(data.idade.mode()))
-    filhos = st.slider('Filhos', int(data.filhos.min()), int(data.filhos.max()), int(data.filhos.mode()))
-    genero = st.radio('Gênero', ('feminino', 'masculino'))
-    fumante = st.radio('Fumante', ('sim', 'nao'))
-    regiao = st.radio('Região', ('sudoeste', 'sudeste', 'noroeste', 'nordeste'))
-    
+    imc = st.sidebar.slider('Bmi',float(data.imc.min()), float(data.imc.max()), float(data.imc.mean()))
+    idade = st.sidebar.slider('Idade', int(data.idade.min()), int(data.idade.max()), int(data.idade.mode()))
+    filhos = st.sidebar.slider('Filhos', int(data.filhos.min()), int(data.filhos.max()), int(data.filhos.mode()))
+    genero = st.sidebar.selectbox('Gênero', ('feminino', 'masculino'))
+    fumante = st.sidebar.selectbox('Fumante', ('sim', 'nao'))
+    regiao = st.sidebar.selectbox('Região', ('sudoeste', 'sudeste', 'noroeste', 'nordeste'))
+
     df = {'imc': imc,
           'idade': idade,
           'filhos': filhos,
@@ -45,6 +46,11 @@ def user_input_features():
 
 df = user_input_features()
 
+# Mostra os parametros escolhidos 
+st.subheader('Parametros selecionados')
+st.write(df)
+st.write('---')
+
 # cria as variáveis X e y
 X = data.drop('total', axis=1)
 y = data.total
@@ -56,20 +62,18 @@ X = new_df.drop([1338])
 df = new_df.loc[[1338]]
 
 
-# load model
-xgb_model = XGBRegressor()
-xgb_model.load_model("best_model.json")
-
-pred = xgb_model.predict(df.values)
+# define o modelo que será urilizado na regressão
+model = XGBRegressor().fit(X, y)
+pred = model.predict(df)
 
 st.subheader('Predições')
 st.markdown('Custo do plano de acordo com os valores escolhidos')
-st.write((pred))
+st.write(pred)
 st.write('---')
 
 
 st.set_option('deprecation.showPyplotGlobalUse', False)
-explainer = shap.TreeExplainer(xgb_model)
+explainer = shap.TreeExplainer(model)
 shap_values = explainer.shap_values(X)
 if st.button('Show SHAP Graphs'):
     st.header('Importância de cada feature')
@@ -80,8 +84,8 @@ if st.button('Show SHAP Graphs'):
     plt.title('Importância das features baseadas nos valores SHAP')
     shap.summary_plot(shap_values, X, plot_type="bar")
     st.pyplot(bbox_inches='tight')
-    
+
 st.subheader('Conclusão')
 st.write('''De acordo com os valores Shap, a variável que mais influencia na composição do valor
             é se a pessoa é fumante ou não. Idade também colabora bastante no preço já que nos planos
-            de saúde quanto mais velho uma pessoa é, mais caro é o valor''')
+            de saúde quanto mais velho uma pessoa é, mais caro é o valor''') 
