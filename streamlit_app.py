@@ -23,8 +23,7 @@ st.write(data.head(15))
 
 # Sidebar
 # Especifique os parametros de entrada
-st.sidebar.write('---')
-st.sidebar.header('Especifique os parâmetros de entrada para Regressão linear')
+st.header('Especifique os parâmetros de entrada')
 
 def user_input_features():
     imc = st.slider('Bmi',float(data.imc.min()), float(data.imc.max()), float(data.imc.mean()))
