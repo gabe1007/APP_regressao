@@ -62,7 +62,6 @@ xgb_model = XGBRegressor()
 xgb_model.load_model("best_model.json")
 
 pred = xgb_model.predict(df.values)
-pred = model.predict(df)
 
 st.subheader('Predições')
 st.markdown('Custo do plano de acordo com os valores escolhidos')
