@@ -1,5 +1,7 @@
 # Preditor de preço para planos de saúde
 
+<img src="/plano-de-saude-4.jpg" alt="Tanzania Tourism Prediciton App" />
+
 Planos de saúde é uma coisa cara hoje em dia. No mundo ideal é dever do governo
 prover saúde para o cidadão, porém para se ter um atendimento médico descente no Brasil e em outros lugares do mundo, 
 é necessário ter um plano de saúde. Imagine que você deseja contratar o serviço mas não quer conversar com o corretor,
