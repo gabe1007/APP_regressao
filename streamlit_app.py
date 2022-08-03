@@ -46,11 +46,6 @@ def user_input_features():
 
 df = user_input_features()
 
-# Mostra os parametros escolhidos 
-st.subheader('Parametros selecionados')
-st.write(df)
-st.write('---')
-
 # cria as variáveis X e y
 X = data.drop('total', axis=1)
 y = data.total
