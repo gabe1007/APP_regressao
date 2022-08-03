@@ -69,10 +69,10 @@ st.write('---')
 
 
 st.set_option('deprecation.showPyplotGlobalUse', False)
+st.header('Importância de cada feature - VALORES SHAP')
 explainer = shap.TreeExplainer(xgb_model)
 shap_values = explainer.shap_values(X)
 if st.button('Show SHAP Graphs'):
-    st.header('Importância de cada feature')
     plt.title('Importância das features baseadas nos valores SHAP')
     shap.summary_plot(shap_values, X)
     st.pyplot(bbox_inches='tight')
