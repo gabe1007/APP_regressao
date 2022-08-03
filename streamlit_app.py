@@ -27,12 +27,12 @@ st.sidebar.write('---')
 st.sidebar.header('Especifique os parâmetros de entrada para Regressão linear')
 
 def user_input_features():
-    imc = st.sidebar.slider('Bmi',float(data.imc.min()), float(data.imc.max()), float(data.imc.mean()))
-    idade = st.sidebar.slider('Idade', int(data.idade.min()), int(data.idade.max()), int(data.idade.mode()))
-    filhos = st.sidebar.slider('Filhos', int(data.filhos.min()), int(data.filhos.max()), int(data.filhos.mode()))
-    genero = st.sidebar.selectbox('Gênero', ('feminino', 'masculino'))
-    fumante = st.sidebar.selectbox('Fumante', ('sim', 'nao'))
-    regiao = st.sidebar.selectbox('Região', ('sudoeste', 'sudeste', 'noroeste', 'nordeste'))
+    imc = st.slider('Bmi',float(data.imc.min()), float(data.imc.max()), float(data.imc.mean()))
+    idade = st.slider('Idade', int(data.idade.min()), int(data.idade.max()), int(data.idade.mode()))
+    filhos = st.slider('Filhos', int(data.filhos.min()), int(data.filhos.max()), int(data.filhos.mode()))
+    genero = st.radio('Gênero', ('feminino', 'masculino'))
+    fumante = st.radio('Fumante', ('sim', 'nao'))
+    regiao = st.radio('Região', ('sudoeste', 'sudeste', 'noroeste', 'nordeste'))
 
     df = {'imc': imc,
           'idade': idade,
@@ -76,7 +76,7 @@ st.write('---')
 
 
 st.set_option('deprecation.showPyplotGlobalUse', False)
-explainer = shap.TreeExplainer(model)
+explainer = shap.TreeExplainer(xgb_model)
 shap_values = explainer.shap_values(X)
 if st.button('Show SHAP Graphs'):
     st.header('Importância de cada feature')
