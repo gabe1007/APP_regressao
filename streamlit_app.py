@@ -63,7 +63,10 @@ df = new_df.loc[[1338]]
 
 
 # define o modelo que será urilizado na regressão
-model = XGBRegressor().fit(X, y)
+xgb_model = XGBRegressor()
+xgb_model.load_model("best_model.json")
+
+pred = xgb_model.predict(df.values)
 pred = model.predict(df)
 
 st.subheader('Predições')
